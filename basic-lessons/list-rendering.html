@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .box {
+            width: 600px;
+            height: 600px;
+            background-color: black;
+            box-sizing: border-box;
+            color: whitesmoke;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 20px;
+        }
+
+        .number {
+            font-size: 7rem;
+            text-align: center;
+        }
+
+        .btn-container {
+            display: flex;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            color: white;
+        }
+
+        .btn-plus {
+            background-color: green;
+        }
+
+        .btn-minus {
+            background-color: #ccc;
+        }
+    </style>
+
+
+    <div id="app">
+
+        <div class="container">
+
+            <template v-for="user in users" :key="user.id" >
+                <div style="display: block; padding: 10px; margin: 10px; border: 1px solid black;">Name: {{user.name}} <br> Age: {{user.age}}</div>
+            </template>
+
+        </div>
+
+
+    </div>
+
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+        createApp({
+            setup() {
+                const users = ref([{id: 0, name: 'john', age: 20}, {id: 1, name: 'jane', age: 21}, {id: 2, name: 'jim', age: 31}, {id: 3, name: 'jill', age: 20}])
+
+                return { users }
+            }
+        }).mount('#app')
+    </script>
+
+</body>
+
+</html>

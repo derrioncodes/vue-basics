@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            width: 600px;
+            height: 600px;
+            background-color: black;
+            box-sizing: border-box;
+            color: whitesmoke;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 20px;
+        }
+
+        .box2 {
+            width: 600px;
+            height: 600px;
+            background-color: rgb(153, 153, 227);
+            box-sizing: border-box;
+            color: whitesmoke;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 20px;
+        }
+
+        .box3 {
+            width: 600px;
+            height: 600px;
+            background-color: green;
+            box-sizing: border-box;
+            color: whitesmoke;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 20px;
+        }
+
+        .number {
+            font-size: 7rem;
+            text-align: center;
+        }
+
+        .btn-container {
+            display: flex;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            color: white;
+        }
+
+        .btn-plus {
+            background-color: green;
+        }
+
+        .btn-minus {
+            background-color: #ccc;
+        }
+    </style>
+
+
+    <div id="app">
+
+        <div class="container">
+            <div class="box" v-if="box === 'black'">
+                
+            </div>
+            <div class="box2" v-show="box === 'purple'">
+                
+            </div>
+            <!-- <div class="box3" v-else-if="box === 'green'">
+                
+            </div>
+            <div v-else>Sorry we don't have that color
+                
+            </div> -->
+
+        </div>
+
+
+    </div>
+
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+        createApp({
+            setup() {
+                const box = ref('purple')
+
+
+
+                return { box }
+            }
+        }).mount('#app')
+    </script>
+
+</body>
+
+</html>

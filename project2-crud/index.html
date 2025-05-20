@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 20px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 250px;
+        }
+
+        button {
+            padding: 6px 10px;
+            margin-left: 5px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        li.completed span {
+            text-decoration: line-through;
+            color: grey;
+        }
+    </style>
+
+
+    <div id="app">
+
+        <h2>Todo App</h2>
+
+        <input type="text" v-model="newTodo" @keyup.enter="addTodo" placeholder="Enter a task...">
+        <input type="text" v-model="todoTime" @keyup.enter="addTodo" placeholder="Enter a time...">
+        <button @click="addTodo">Add</button>
+
+        <ul>
+            <li v-for="(todo, index) in todos" :key="index" :class="{completed: todo.done}">
+                <input type="checkbox" v-model="todo.done"><span>{{todo.text}}</span> <span>{{todo.time}}</span> <button @click="removeTodo(index)">Delete</button>
+            </li>
+        </ul>
+
+    </div>
+
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+        createApp({
+            setup() {
+                const newTodo = ref('')
+
+                const todos = ref([]);
+
+                const todoTime = ref([])
+
+                const addTodo = () =>{
+                    if(newTodo.value.trim()){
+                        todos.value.push({text: newTodo.value.trim(), done: false, time: todoTime.value.trim(),});
+                        newTodo.value = '';
+                        todoTime.value = '';
+                    }
+                };
+
+                const removeTodo = (index) => {
+                    todos.value.splice(index, 1);
+                };
+
+                return { newTodo, todos, todoTime, addTodo, removeTodo }
+
+
+            }
+        }).mount('#app')
+    </script>
+
+</body>
+
+</html>
