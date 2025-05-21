@@ -56,13 +56,6 @@
                 placeholder="Tell us why you want to volunteer"
             />
 
-            <div>
-                <label class="block text-sm font-medium mb-1">Reasons for Volunterring</label>
-                <textarea v-model="form.reason" id="reason" name="reason" rows="4" cols="50"
-                    class="border p-2 w-full rounded" placeholder="Tell us why you want to volunteer"
-                    :class="{ 'border-red-500': errors.name }">{{ form.reason }}</textarea>
-                <p v-if="errors.reason" class="text-red-600 text-sm mt-1">{{ errors.reason }}</p>
-            </div>
             <!-- Terms (checkbox) -->
             <div class="flex items-start">
                 <input type="checkbox" id="terms" v-model="form.terms" class="mr-2 mt-1"
