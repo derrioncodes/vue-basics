@@ -425,7 +425,101 @@ onMounted(() => {
   console.log("Pie Chart Ref:", pieChartRef.value); // ✅ Should log the <canvas> element
 });
 
+if (lineChartRef.value && amortizationSchedule.value.length > 0) {
 
+// Prepare data for the line chart
+const labels = [];
+const principalData = [];
+const interestData = [];
+const balanceData = [];
+
+// Sample data point to avoid overcrowding the chart
+const step = Math.max(1, Math.floor(amortizationSchedule.value.length / 12));
+
+for (let i = 0; i < amortizationSchedule.value.length; i += step){
+  const payment = amortizationSchedule.value.length[i];
+  labels.push(`Month ${payment.paymentNumber}`);
+
+  // Cumulative prinicipal paid
+  const principalPaid = loanAmount.value - payment.remainingBalance;
+  principalData.push(principalPaid);
+
+  // Cumulative interest paid
+  interestData.push(payment.totalInterestPaid);
+
+  // Remaining balance
+  balanceData.push(payment.remainingBalance);
+
+}
+
+// Add the final payment if not already included
+const lastPayment = amortizationSchedule.value[amortizationSchedule.value.length - 1];
+if (lastPayment && !labels.includes(`Month ${lastPayment.paymentNumber}`)){
+  labels.push(`Month ${lastPayment.paymentNumber}`);
+  principalData.push(loanAmount.value);
+  interestData.push(lastPayment.totalInterestPaid);
+  balanceData.push(0);
+}
+
+lineChart = new Chart(lineChartRef.value,{
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Principal Paid',
+        data: principalData,
+        borderColor: '#4F46E5',
+        backgroundColor:'rgba(79, 70, 229, 0.1)',
+        fill: true,
+        tension: 0.1
+      },
+      {
+        label: 'Interest Paid',
+        data: interestData,
+        borderColor: '#EC4899',
+        backgroundColor:'rgba(236, 72, 153, 0.1)',
+        fill: true,
+        tension: 0.1
+      },
+      {
+        label: 'Remaining Balance',
+        data: balanceData,
+        borderColor: '#10B581',
+        backgroundColor:'rgba(16, 185, 129, 0.1)',
+        fill: false,
+        tension: 0.1
+      }
+    ]
+
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: function(value) {
+            return '$' + formatCurrency(value);
+
+          }
+        }
+      }
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function(context){
+            return `${context.dataset.label}: $${formatCurrency(context.raw)}`;
+          }
+        }
+      }
+    }
+  }
+})
+
+};
 
 
 </script>
